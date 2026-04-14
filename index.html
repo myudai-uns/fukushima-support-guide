@@ -5,12 +5,12 @@
 <meta name="viewport" content="width=device-width, initial-scale=1.0">
 <title>福島県 中小企業支援機関一覧</title>
 <style>
-  @import url('https://fonts.googleapis.com/css2?family=Noto+Sans+JP:wght@400;700;900&family=Zen+Maru+Gothic:wght@500;700;900&display=swap');
+  @import url('https://fonts.googleapis.com/css2?family=Zen+Maru+Gothic:wght@500;700;900&display=swap');
 
   * { margin: 0; padding: 0; box-sizing: border-box; }
 
   body {
-    font-family: 'Zen Maru Gothic', 'Noto Sans JP', sans-serif;
+    font-family: 'Zen Maru Gothic', sans-serif;
     background: #d6cfc4;
     display: flex;
     justify-content: center;
@@ -25,74 +25,88 @@
     background: #f5f0e8;
     position: relative;
     overflow: hidden;
+    display: flex;
+    flex-direction: column;
   }
 
-  /* ===== HEADER CARD ===== */
+  /* ===== TAPE CORNERS ===== */
+  .tape {
+    position: absolute;
+    width: 64px;
+    height: 20px;
+    background: rgba(200,169,110,0.45);
+    border-radius: 2px;
+    z-index: 3;
+  }
+  .tape-tl { top: 10px; left: 10px; transform: rotate(-20deg); }
+  .tape-tr { top: 10px; right: 10px; transform: rotate(18deg); }
+  .tape-bl { bottom: 10px; left: 10px; transform: rotate(15deg); }
+  .tape-br { bottom: 10px; right: 10px; transform: rotate(-22deg); }
+
+  /* ===== HEADER ===== */
   .header-card {
     background: #2c4a6e;
-    margin: 24px 28px 0;
-    border-radius: 6px;
-    padding: 22px 32px 18px;
+    margin: 28px 28px 0;
+    border-radius: 8px;
+    padding: 28px 32px 24px;
     text-align: center;
     position: relative;
     color: #fff;
+    flex-shrink: 0;
   }
-
   .header-card::before,
   .header-card::after {
     content: '';
     position: absolute;
     top: -14px;
-    width: 20px;
-    height: 28px;
+    width: 22px;
+    height: 30px;
     background: #c8a96e;
     border-radius: 4px;
   }
-  .header-card::before { left: 30%; }
-  .header-card::after { right: 30%; }
+  .header-card::before { left: 32%; }
+  .header-card::after { right: 32%; }
 
   .header-card h1 {
-    font-size: 30px;
+    font-size: 34px;
     font-weight: 900;
     letter-spacing: 3px;
-    line-height: 1.3;
   }
-
   .header-card p {
-    font-size: 15px;
+    font-size: 16px;
     color: #b8cde0;
-    margin-top: 4px;
+    margin-top: 6px;
     font-weight: 500;
   }
 
-  /* ===== GRID LAYOUT ===== */
-  .grid {
+  /* ===== MAIN AREA ===== */
+  .main {
+    flex: 1;
     display: grid;
     grid-template-columns: 1fr 1fr;
+    grid-template-rows: auto auto 1fr;
+    align-items: start;
     gap: 0;
-    padding: 12px 20px 16px;
+    padding: 14px 20px 0;
   }
 
-  /* ===== CATEGORY CARD ===== */
-  .cat-card {
+  /* ===== CARD BASE ===== */
+  .card {
     margin: 8px;
-    border-radius: 8px;
-    padding: 20px 20px 16px;
+    border-radius: 10px;
+    padding: 24px 24px 20px;
     position: relative;
   }
+  .card.full { grid-column: 1 / -1; }
 
-  .cat-card.full {
-    grid-column: 1 / -1;
-  }
-
-  /* Clothespin clip */
+  /* Clip */
   .clip {
     position: absolute;
-    top: -12px;
+    top: -13px;
     left: 50%;
     transform: translateX(-50%);
-    width: 22px;
-    height: 30px;
+    width: 24px;
+    height: 32px;
     background: #c8a96e;
     border-radius: 4px;
     z-index: 2;
@@ -100,129 +114,121 @@
   .clip::after {
     content: '';
     position: absolute;
-    bottom: 2px;
+    bottom: 3px;
     left: 50%;
     transform: translateX(-50%);
-    width: 14px;
+    width: 16px;
     height: 4px;
     background: #b89a5e;
     border-radius: 2px;
   }
 
-  /* Pastel colors */
+  /* Pastel BGs */
   .bg-blue { background: #c4dae8; }
   .bg-pink { background: #f0c4c8; }
   .bg-cream { background: #f2e8c9; }
   .bg-mint { background: #c2ddd2; }
   .bg-lavender { background: #d4c8e0; }
 
-  .cat-label {
-    display: inline-block;
-    font-size: 18px;
+  .card-title {
+    font-size: 22px;
     font-weight: 900;
     color: #2c3e50;
-    margin-bottom: 8px;
-    padding-bottom: 4px;
-    border-bottom: 3px solid rgba(0,0,0,0.15);
-    line-height: 1.3;
+    margin-bottom: 4px;
+    padding-bottom: 5px;
+    border-bottom: 3px solid rgba(0,0,0,0.13);
+    display: inline-block;
   }
 
-  .cat-sub {
-    font-size: 12px;
-    color: #5a6b7a;
-    font-weight: 700;
-    margin-bottom: 10px;
+  .card-sub {
     display: block;
+    font-size: 13px;
+    color: #4a5a6a;
+    font-weight: 700;
+    margin-bottom: 12px;
   }
 
-  /* ===== ITEM ROW ===== */
+  /* ===== ROW ===== */
   .row {
     display: flex;
     align-items: baseline;
     justify-content: space-between;
-    padding: 5px 0;
-    border-bottom: 1.5px dotted rgba(0,0,0,0.12);
+    padding: 7px 0;
+    border-bottom: 2px dotted rgba(0,0,0,0.10);
   }
   .row:last-child { border-bottom: none; }
 
-  .row-name {
-    font-size: 16px;
+  .r-name {
+    font-size: 18px;
     font-weight: 700;
     color: #2c3e50;
     line-height: 1.5;
   }
 
-  .row-detail {
-    font-size: 11px;
+  .r-detail {
+    font-size: 12px;
     color: #5a6b7a;
     font-weight: 700;
   }
 
-  .row-tel {
-    font-size: 16px;
+  .r-tel {
+    font-size: 18px;
     font-weight: 700;
     color: #2c3e50;
     white-space: nowrap;
-    margin-left: 8px;
+    margin-left: 12px;
     flex-shrink: 0;
   }
 
-  /* ===== COMMERCIAL CHAMBERS - compact 2-col ===== */
-  .chamber-grid {
+  /* ===== 2-COL GRID (商工会議所) ===== */
+  .grid2 {
     display: grid;
     grid-template-columns: 1fr 1fr;
-    gap: 2px 20px;
+    gap: 2px 28px;
   }
+  .grid2 .row { padding: 6px 0; }
+  .grid2 .r-name { font-size: 18px; }
+  .grid2 .r-tel { font-size: 18px; }
 
-  .chamber-grid .row {
-    padding: 4px 0;
+  /* ===== RIGHT STACK ===== */
+  .right-stack {
+    display: flex;
+    flex-direction: column;
   }
 
   /* ===== FOOTER ===== */
   .footer {
+    flex-shrink: 0;
     text-align: center;
-    padding: 6px 28px 18px;
-    font-size: 12px;
+    padding: 10px 28px 18px;
+    font-size: 13px;
     color: #8a7e6e;
     font-weight: 700;
   }
 
-  /* ===== DECORATIVE TAPE ===== */
-  .tape {
-    position: absolute;
-    width: 60px;
-    height: 18px;
-    background: rgba(200,169,110,0.45);
-    border-radius: 2px;
-    z-index: 3;
-  }
-  .tape-tl { top: 12px; left: 12px; transform: rotate(-20deg); }
-  .tape-tr { top: 12px; right: 12px; transform: rotate(18deg); }
-  .tape-bl { bottom: 12px; left: 12px; transform: rotate(15deg); }
-  .tape-br { bottom: 12px; right: 12px; transform: rotate(-22deg); }
-
   /* ===== RESPONSIVE ===== */
   @media (max-width: 1000px) {
-    .poster {
-      width: 100vw;
-      height: 125vw;
-    }
-    .header-card { margin: 2.2vw 2.6vw 0; padding: 2vw 3vw 1.6vw; }
-    .header-card h1 { font-size: 2.8vw; }
-    .header-card p { font-size: 1.4vw; }
-    .header-card::before, .header-card::after { width: 1.8vw; height: 2.6vw; top: -1.3vw; }
-    .grid { padding: 1.1vw 1.8vw 1.4vw; }
-    .cat-card { margin: 0.7vw; padding: 1.8vw 1.8vw 1.4vw; }
-    .clip { width: 2vw; height: 2.8vw; top: -1.1vw; }
-    .cat-label { font-size: 1.7vw; margin-bottom: 0.7vw; }
-    .cat-sub { font-size: 1.1vw; margin-bottom: 0.8vw; }
-    .row { padding: 0.4vw 0; }
-    .row-name { font-size: 1.5vw; }
-    .row-detail { font-size: 1vw; }
-    .row-tel { font-size: 1.5vw; }
-    .chamber-grid { gap: 0.2vw 1.8vw; }
-    .footer { font-size: 1.1vw; padding: 0.5vw 2.6vw 1.6vw; }
-    .tape { width: 5.5vw; height: 1.6vw; }
+    body { padding: 0; }
+    .poster { width: 100vw; height: 125vw; }
+    .header-card { margin: 2.6vw 2.6vw 0; padding: 2.6vw 3vw 2.2vw; }
+    .header-card h1 { font-size: 3.2vw; }
+    .header-card p { font-size: 1.5vw; }
+    .header-card::before, .header-card::after { width: 2vw; height: 2.8vw; top: -1.3vw; }
+    .main { padding: 1.4vw 1.8vw 0; }
+    .card { margin: 0.7vw; padding: 2.2vw 2.2vw 1.8vw; }
+    .clip { width: 2.2vw; height: 3vw; top: -1.2vw; }
+    .card-title { font-size: 2vw; }
+    .card-sub { font-size: 1.2vw; margin-bottom: 1vw; }
+    .row { padding: 0.6vw 0; }
+    .r-name { font-size: 1.7vw; }
+    .r-detail { font-size: 1.1vw; }
+    .r-tel { font-size: 1.7vw; }
+    .grid2 { gap: 0.2vw 2.6vw; }
+    .grid2 .row { padding: 0.55vw 0; }
+    .grid2 .r-name { font-size: 1.7vw; }
+    .grid2 .r-tel { font-size: 1.7vw; }
+    .footer { font-size: 1.2vw; padding: 1.2vw 2.6vw 2vw; }
+    .tape { width: 6vw; height: 1.8vw; }
   }
 </style>
 </head>
@@ -240,151 +246,129 @@
     <p>融資・保証・経営相談　全20機関ガイド</p>
   </div>
 
-  <!-- GRID -->
-  <div class="grid">
+  <!-- MAIN -->
+  <div class="main">
 
-    <!-- 日本政策金融公庫 -->
-    <div class="cat-card bg-blue">
+    <!-- LEFT: 日本政策金融公庫 -->
+    <div class="card bg-blue">
       <div class="clip"></div>
-      <div class="cat-label">日本政策金融公庫</div>
-      <span class="cat-sub">政府系金融機関 ／ 創業・事業融資</span>
+      <div class="card-title">日本政策金融公庫</div>
+      <span class="card-sub">政府系金融機関 ／ 創業・事業融資</span>
       <div class="row">
-        <div>
-          <div class="row-name">福島支店</div>
-          <div class="row-detail">中小企業事業</div>
-        </div>
-        <div class="row-tel">024-522-9241</div>
+        <div><div class="r-name">福島支店</div><div class="r-detail">中小企業事業</div></div>
+        <div class="r-tel">024-522-9241</div>
       </div>
       <div class="row">
-        <div>
-          <div class="row-name">福島支店</div>
-          <div class="row-detail">国民生活事業</div>
-        </div>
-        <div class="row-tel">0570-008-503</div>
+        <div><div class="r-name">福島支店</div><div class="r-detail">国民生活事業</div></div>
+        <div class="r-tel">0570-008-503</div>
       </div>
       <div class="row">
-        <div>
-          <div class="row-name">いわき支店</div>
-          <div class="row-detail">国民生活事業</div>
-        </div>
-        <div class="row-tel">0570-008-545</div>
+        <div><div class="r-name">いわき支店</div><div class="r-detail">国民生活事業</div></div>
+        <div class="r-tel">0570-008-545</div>
       </div>
       <div class="row">
-        <div>
-          <div class="row-name">会津若松支店</div>
-          <div class="row-detail">国民生活事業</div>
-        </div>
-        <div class="row-tel">0570-009-386</div>
+        <div><div class="r-name">会津若松支店</div><div class="r-detail">国民生活事業</div></div>
+        <div class="r-tel">0570-009-386</div>
       </div>
       <div class="row">
-        <div>
-          <div class="row-name">郡山支店</div>
-          <div class="row-detail">国民生活事業</div>
-        </div>
-        <div class="row-tel">0570-009-629</div>
+        <div><div class="r-name">郡山支店</div><div class="r-detail">国民生活事業</div></div>
+        <div class="r-tel">0570-009-629</div>
       </div>
     </div>
 
-    <!-- 右カラム: 商工中金 + 信用保証 + その他 -->
-    <div style="display:flex; flex-direction:column;">
-
+    <!-- RIGHT STACK -->
+    <div class="right-stack">
       <!-- 商工中金 -->
-      <div class="cat-card bg-pink">
+      <div class="card bg-pink">
         <div class="clip"></div>
-        <div class="cat-label">商工中金</div>
-        <span class="cat-sub">中小企業向け融資</span>
+        <div class="card-title">商工中金</div>
+        <span class="card-sub">中小企業向け融資</span>
         <div class="row">
-          <div class="row-name">福島支店</div>
-          <div class="row-tel">024-526-1201</div>
+          <div class="r-name">福島支店</div>
+          <div class="r-tel">024-526-1201</div>
         </div>
         <div class="row">
-          <div class="row-name">会津若松営業所</div>
-          <div class="row-tel">0242-26-2617</div>
+          <div class="r-name">会津若松営業所</div>
+          <div class="r-tel">0242-26-2617</div>
         </div>
       </div>
 
       <!-- 信用保証協会 -->
-      <div class="cat-card bg-cream">
+      <div class="card bg-cream">
         <div class="clip"></div>
-        <div class="cat-label">信用保証協会</div>
-        <span class="cat-sub">融資の信用保証</span>
+        <div class="card-title">信用保証協会</div>
+        <span class="card-sub">融資の信用保証</span>
         <div class="row">
-          <div class="row-name">福島県信用保証協会</div>
-          <div class="row-tel">024-573-5265</div>
+          <div class="r-name">福島県信用保証協会</div>
+          <div class="r-tel">024-573-5265</div>
         </div>
       </div>
 
       <!-- その他支援機関 -->
-      <div class="cat-card bg-lavender">
+      <div class="card bg-lavender">
         <div class="clip"></div>
-        <div class="cat-label">その他支援機関</div>
-        <span class="cat-sub">経営支援・ワンストップ相談</span>
+        <div class="card-title">その他支援機関</div>
+        <span class="card-sub">経営支援・ワンストップ相談</span>
         <div class="row">
-          <div class="row-name">県商工会連合会</div>
-          <div class="row-tel">024-525-3411</div>
+          <div class="r-name">県商工会連合会</div>
+          <div class="r-tel">024-525-3411</div>
         </div>
         <div class="row">
-          <div>
-            <div class="row-name">県中小企業団体中央会</div>
-          </div>
-          <div class="row-tel">024-536-1261</div>
+          <div class="r-name">県中小企業団体中央会</div>
+          <div class="r-tel">024-536-1261</div>
         </div>
         <div class="row">
-          <div>
-            <div class="row-name">県よろず支援拠点</div>
-            <div class="row-detail">無料相談窓口</div>
-          </div>
-          <div class="row-tel">024-954-4161</div>
+          <div><div class="r-name">県よろず支援拠点</div><div class="r-detail">無料相談窓口</div></div>
+          <div class="r-tel">024-954-4161</div>
         </div>
       </div>
-
     </div>
 
-    <!-- 商工会議所 - full width -->
-    <div class="cat-card bg-mint full">
+    <!-- FULL: 商工会議所 -->
+    <div class="card bg-mint full">
       <div class="clip"></div>
-      <div class="cat-label">商工会議所</div>
-      <span class="cat-sub">経営相談・セミナー・ネットワーキング　県内10箇所</span>
-      <div class="chamber-grid">
+      <div class="card-title">商工会議所</div>
+      <span class="card-sub">経営相談・セミナー・ネットワーキング　県内10箇所</span>
+      <div class="grid2">
         <div class="row">
-          <div class="row-name">福島</div>
-          <div class="row-tel">024-536-5511</div>
+          <div class="r-name">福島</div>
+          <div class="r-tel">024-536-5511</div>
         </div>
         <div class="row">
-          <div class="row-name">郡山</div>
-          <div class="row-tel">024-921-2600</div>
+          <div class="r-name">郡山</div>
+          <div class="r-tel">024-921-2600</div>
         </div>
         <div class="row">
-          <div class="row-name">会津若松</div>
-          <div class="row-tel">0242-27-1212</div>
+          <div class="r-name">会津若松</div>
+          <div class="r-tel">0242-27-1212</div>
         </div>
         <div class="row">
-          <div class="row-name">いわき</div>
-          <div class="row-tel">0246-25-9151</div>
+          <div class="r-name">いわき</div>
+          <div class="r-tel">0246-25-9151</div>
         </div>
         <div class="row">
-          <div class="row-name">白河</div>
-          <div class="row-tel">0248-23-3101</div>
+          <div class="r-name">白河</div>
+          <div class="r-tel">0248-23-3101</div>
         </div>
         <div class="row">
-          <div class="row-name">須賀川</div>
-          <div class="row-tel">0248-76-2124</div>
+          <div class="r-name">須賀川</div>
+          <div class="r-tel">0248-76-2124</div>
         </div>
         <div class="row">
-          <div class="row-name">原町</div>
-          <div class="row-tel">0244-22-1141</div>
+          <div class="r-name">原町</div>
+          <div class="r-tel">0244-22-1141</div>
         </div>
         <div class="row">
-          <div class="row-name">相馬</div>
-          <div class="row-tel">0244-36-3171</div>
+          <div class="r-name">相馬</div>
+          <div class="r-tel">0244-36-3171</div>
         </div>
         <div class="row">
-          <div class="row-name">会津喜多方</div>
-          <div class="row-tel">0241-24-3131</div>
+          <div class="r-name">会津喜多方</div>
+          <div class="r-tel">0241-24-3131</div>
         </div>
         <div class="row">
-          <div class="row-name">二本松</div>
-          <div class="row-tel">0243-23-3211</div>
+          <div class="r-name">二本松</div>
+          <div class="r-tel">0243-23-3211</div>
         </div>
       </div>
     </div>
