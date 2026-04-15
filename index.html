@@ -67,6 +67,13 @@
   .header-card::before { left: 32%; }
   .header-card::after { right: 32%; }
 
+  .header-lead {
+    font-size: 16px;
+    color: #f0d89a;
+    font-weight: 700;
+    margin-bottom: 4px;
+    letter-spacing: 1px;
+  }
   .header-card h1 {
     font-size: 38px;
     font-weight: 900;
@@ -75,7 +82,7 @@
   .header-card p {
     font-size: 18px;
     color: #b8cde0;
-    margin-top: 6px;
+    margin-top: 4px;
     font-weight: 500;
   }
 
@@ -200,10 +207,17 @@
   .footer {
     flex-shrink: 0;
     text-align: center;
-    padding: 4px 16px 12px;
-    font-size: 13px;
+    padding: 4px 16px 10px;
+    font-size: 11px;
     color: #8a7e6e;
     font-weight: 700;
+    line-height: 1.6;
+  }
+  .source {
+    margin-top: 2px;
+    font-size: 10px;
+    color: #9a9080;
+    word-break: break-all;
   }
 
   /* ===== RESPONSIVE ===== */
@@ -242,6 +256,7 @@
 
   <!-- HEADER -->
   <div class="header-card">
+    <p class="header-lead">経営や資金繰りでお困りの際は、こちらへご相談ください</p>
     <h1>福島県 中小企業支援機関一覧</h1>
     <p>融資・保証・経営相談　全20機関ガイド</p>
   </div>
@@ -377,7 +392,8 @@
 
   <!-- FOOTER -->
   <div class="footer">
-    ※ 電話番号は変更される場合があります。最新情報は各機関へお問い合わせください。
+    <div>※ 電話番号は変更される場合があります。最新情報は各機関へお問い合わせください。</div>
+    <div class="source">出典：中小企業庁「中東・ウクライナ情勢・原油価格上昇等に関する特別相談窓口」https://www.chusho.meti.go.jp/keiei/antei/kokusai_josei/（2026年4月15日閲覧）</div>
   </div>
 
 </div>
